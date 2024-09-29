@@ -51,13 +51,14 @@ def GameLoop():
 
     x_direction = 1
     y_direction = 0
+    score = 0
     is_game_running = True
 
 
     while is_game_running:
 
         #clear the terminal
-        os.system("cls")
+        os.system('cls' if os.name == 'nt' else 'clear')
 
         [snake, y_direction, x_direction] = Controls(snake, x_direction, y_direction)
 
@@ -65,6 +66,7 @@ def GameLoop():
         #check if the x and y cord of the snake is the same as the food
         if snake[0].get('x') == x_food and snake[0].get('y') == y_food:
             [x_food, y_food ] = snake_food()
+            score += 1
         else:
             snake.pop()
 
@@ -73,12 +75,22 @@ def GameLoop():
         # these are the cord of the wall
         if snake[0].get("x") == 0 or snake[0].get("y") == 0 or snake[0].get("y") == row_cols - 1 or snake[0].get("x") == (row_cols * 2) - 1 :
             is_game_running = False
-            print("Game Over")
+            print("Game Over!!! Score: ", score)
             return
+
+        # check if snake does not eat itself
+        for i in range(1, len(snake) - 1):
+
+            if snake[0].get("x") == snake[i].get("x") and snake[0].get("y") == snake[i].get("y") :
+                is_game_running = False
+                print("Game Over!!! Score: ", score)
+                return
+                
+
 
         
         Draw(row_cols, snake, x_food, y_food)
-
+        print("Score:", score)
 
         time.sleep(0.1)
 
