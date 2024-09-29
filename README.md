@@ -6,5 +6,9 @@ use AWSD keys to control the snake
 
 #run
 
-You need to have python installed
+You need to have python installed and the keyboard module
 then run python3 main.py or python main.py
+
+#To install the keyboard module
+run pip install keyboard
+
